@@ -17,34 +17,96 @@ test = [];
 test = A * H;
 
 
-I1=double(imread('lena.bmp'));
+I1=double(imread('lena.bmp')); %On get le quadrangle sur I1
+[w1 ,h1] = size(I1);
 
-I2=double(imread('barbara.bmp'));
-
-figure, imshow(uint8(I1));
+I2=double(imread('barbara.bmp')); %Qu'on remplace par un rectangle de I2
+I2 = I2(75:232,448:548); %Rectangle quelconque qu'on fixe
+[w2 ,h2] = size(I2);
 
 %HOMOGRAPHIE IMAGE
-[depart]=ginput(4); %prend un point avec un click de souris
-depart=fix(depart);
-%les quatres points de l'image qu'on veut remplacer
-D1 = [depart(1,1) depart(1,2)];
-D2 = [depart(2,1) depart(2,2)];
-D3 = [depart(3,1) depart(3,2)];
-D4 = [depart(4,1) depart(4,2)];
+
+figure, imshow(uint8(I1));
+title('I1 ARR');
+drawnow;
+[arrive]=ginput(4); %prend un point avec un click de souris
+arrive=fix(arrive);
+
+%les quatres points de l'image I1 qu'on veut remplacer:
+%POINTS D'ARRIVER DU RECTANGLE
+AR1 = [arrive(1,1) arrive(1,2)]
+AR2 = [arrive(2,1) arrive(2,2)]
+AR3 = [arrive(3,1) arrive(3,2)]
+AR4 = [arrive(4,1) arrive(4,2)]
+
 figure, imshow(uint8(I2));
+title('I2 DP');
+drawnow;
 
 %le rectangle de l'autre image qu'on veut print sur la première
-E1 = [470 96];
-E2 = [540 108];
-E3 = [521 214];
-E4 = [458 223];
+%On le fixe mais on peut aussi le prelever au clique comme en tp image
+%POINTS DE DEPART DU RECTANGLE 
+DP1 = [1 ,1];
+DP2 = [1 ,h2];
+DP3 = [w2 ,h2];
+DP4 = [w2 ,1];
+%On doit regarde où est-ce que ces points sont dans l'image d'arrivée + gde
+%puis faire un mask avec
 
-[D E homo]=homographie(E1,E2,E3,E4,D1,D2,D3,D4);
+%homographie H_img qui lie le rectangle au quadrangle
+[testdepart ,testarrive ,HOMO]=homographie(DP1,DP2,DP3,DP4,AR1,AR2,AR3,AR4);
 
-homographie = [];
-homographie= double(I1.*homo);
+testarrive2 = [];
+testarrive2 = testdepart * HOMO;
 
-figure, imshow(uint8(test0));
+MaskARR = double(roipoly(I1,arrive(:,1),arrive(:,2)));
+
+
+I3 = zeros(w1 ,h1);
+I3 = (I3+MaskARR).*255;
+figure, imshow(uint8(I3));
+title('MaskARR');
+drawnow;
+
+%On print I seulement sur le masque relevé
+
+compteurI2 = w2*h2
+
+for i = 1:w1
+    for j = 1:h1
+        
+        
+        if compteurI2 > 0
+            
+            if I3(i,j) == 255
+                I3(i,j) = I2((w2*h2)-compteurI2+1);
+                compteurI2 = compteurI2 -1
+            
+            else
+                I3(i,j) = I1(i,j);
+            end
+            
+            
+        else
+            I3(i,j) = I1(i,j);
+        end
+        
+        
+    end
+end
+
+
+figure, imshow(uint8(I3));
+title('Image finale');
+drawnow;
+
+% testhomo = I2.*HOMO
+
+
+% homographie = [];
+% homographie= double(I1.*homo);
+% 
+% figure, imshow(uint8(test0));
 
 
 
@@ -62,8 +124,6 @@ figure, imshow(uint8(test0));
 % sp(4) = max(ceil(p(3)), ceil(p(4)));   %ymax
 % Index into the original image to create the new image
 % MM = I1(sp(2):sp(4), sp(1): sp(3),:);
-MM = double(roipoly(I1,depart));
-figure,imshow(MM);
 % figure,imshow(I1);
 % Iextract = [];
 %
