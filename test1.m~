@@ -2,12 +2,26 @@ clear all;
 clc;
 close all;
 
+M1=[1 2];
+M2=[3 4];
+M3=[5 6];
+M4=[7 8];
+M5=[9 10];
+M6=[11 12];
+M7=[13 14];
+M8=[15 16];
+
+[H]=homographie(M1,M2,M3,M4,M5,M6,M7,M8);
+
+
 I1=double(imread('lena.bmp')); %On get le quadrangle sur I1
 [h1 ,l1] = size(I1);
 
 I2=double(imread('barbara.bmp')); %Qu'on remplace par un rectangle de I2
 %I2 = I2(75:232,448:548); %Rectangle quelconque qu'on fixe
 [h2 ,l2] = size(I2);
+
+%HOMOGRAPHIE IMAGE
 
 figure, imshow(uint8(I1));
 title('I1 ARR');
@@ -40,11 +54,13 @@ DP4 = [h2 ,1];
 [HOMOG]=homographie(DP1,DP2,DP3,DP4,AR1,AR2,AR3,AR4);
 H1=[HOMOG(1,1) HOMOG(2,1) HOMOG(3,1);HOMOG(4,1) HOMOG(5,1) HOMOG(6,1); HOMOG(7,1) HOMOG(8,1) 1];
 I4=zeros(h1,l1);
+I5=zeros(3,h1*l1);
 
 for i=1:h1
     for j=1:l1
         a=H1\[i;j;1];
-        if round(a(1,1))>1 && round(a(1,1))<l2 && round(a(2,1))>1 && round(a(2,1))<h2
+        I5(:,j)=a;
+        if round(a(1,1))>1 && round(a(1,1))<l2 && round(a(2,1))>1 && round(a(2,1))<l2
             I4(i,j)=I2(i,j);
         else
             I4(i,j)=I1(i,j);
@@ -90,6 +106,7 @@ figure, imshow(uint8(I4));
 title('Image finale');
 drawnow;
 
+% testhomo = I2.*HOMO
 
 
 

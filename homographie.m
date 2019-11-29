@@ -1,4 +1,4 @@
-function [A B H] = homographie(A1,B1,C1,D1,A2,B2,C2,D2)
+function [H] = homographie(A1,B1,C1,D1,A2,B2,C2,D2)
 B=[A2';B2';C2';D2'];
 s=1;
 A1=[A1*s s];
