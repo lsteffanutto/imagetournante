@@ -17,22 +17,44 @@ arrive=fix(arrive);
 
 %les quatres points de l'image I1 qu'on veut remplacer:
 %POINTS D'ARRIVER DU RECTANGLE
-AR1 = [arrive(1,1) arrive(1,2)];
+AR1 = [arrive(1,1) arrive(1,2)]; %(x,y)
 AR2 = [arrive(2,1) arrive(2,2)];
 AR3 = [arrive(3,1) arrive(3,2)];
 AR4 = [arrive(4,1) arrive(4,2)];
 
-figure, imshow(uint8(I2));
-title('I2 DP');
-drawnow;
+hold on;
+plot(AR1(1,1),AR1(1,2),'r+','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(AR2(1,1),AR2(1,2),'b+','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(AR3(1,1),AR3(1,2),'g+','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(AR4(1,1),AR4(1,2),'y+','MarkerSize', 10, 'LineWidth', 1);
+legend('AR1','AR2','AR3','AR4');
 
 %le rectangle de l'autre image qu'on veut print sur la première
 %On le fixe mais on peut aussi le prelever au clique comme en tp image
 %POINTS DE DEPART DU RECTANGLE 
 DP1 = [1 ,1];
-DP2 = [1 ,l2];
-DP3 = [h2 ,l2];
-DP4 = [h2 ,1];
+DP2 = [l2 ,1];
+DP3 = [l2 ,h2];
+DP4 = [1 ,h2];
+
+figure, imshow(uint8(I2));
+title('I2 DP');
+
+hold on;
+plot(DP1,'r*','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(DP2(1,1),DP2(1,2),'b*','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(DP3(1,1),DP3(1,2),'g*','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(DP4(1,1),DP4(1,2),'y*','MarkerSize', 10, 'LineWidth', 1);
+
+legend('DP1','DP2','DP3','DP4');
+
+
 %On doit regarde où est-ce que ces points sont dans l'image d'arrivée + gde
 %puis faire un mask avec
 
@@ -41,17 +63,37 @@ DP4 = [h2 ,1];
 H1=[HOMOG(1,1) HOMOG(2,1) HOMOG(3,1);HOMOG(4,1) HOMOG(5,1) HOMOG(6,1); HOMOG(7,1) HOMOG(8,1) 1];
 I4=zeros(h1,l1);
 
+%On parcourt l'image d'arrivée. Pour chaque point, on regard si
+% homographie inverse est dans l'image qu'on veut projeter.
+%Si oui on print le point qu'on veut projeter sur l'image d'arrivée.
+
+%PROJECTION à faire en fonction
+%On parcourt l'image d'arriver en vérifiant si l'homographie inverse de
+%chaque point et dans l'autre image ou pas 
+%Si oui on balance le point de l'autre en appliquant l'homographie
+
 for i=1:h1
     for j=1:l1
-        a=H1\[i;j;1];
-        if round(a(1,1))>1 && round(a(1,1))<l2 && round(a(2,1))>1 && round(a(2,1))<h2
-            I4(i,j)=I2(i,j);
+        a=inv(H1)*[j;i;1];   %C'était inverse inv() au lieu de \
+        a(1,1)=a(1,1)/a(3,1); %ON DIVISE PAR LE NOUVEAU S DE LINVERSE DE H1 BORDEL
+        a(2,1)=a(2,1)/a(3,1);
+        
+        if round(a(1,1))>0 && round(a(1,1))<l2 && round(a(2,1))>0 && round(a(2,1))<h2
+            
+            I4(i,j)=I2(round(a(2,1)),round(a(1,1))); % les points était les mêmes points mais de l'autre image falait leur appliquer l'homo
+            
         else
             I4(i,j)=I1(i,j);
         end
-    a=zeros(3,1);
+        
+    %a=zeros(3,1);
     end
 end
+
+%HOMOGRAPHIE j,i
+%IMAGE i,j
+
+%EXTRACTION à faire aussi
         
 
 %testarrive2 = [];
@@ -89,31 +131,6 @@ end
 figure, imshow(uint8(I4));
 title('Image finale');
 drawnow;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 % homographie = [];
