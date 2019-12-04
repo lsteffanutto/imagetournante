@@ -129,7 +129,7 @@ end
 
 
 figure, imshow(uint8(I4));
-title('Image finale');
+title('Projection finale');
 drawnow;
 
 
@@ -183,3 +183,5 @@ drawnow;
 % MM = I1(sp(2):sp(4), sp(1): sp(3),:);
 % %Display the subsetted image with appropriate axis ratio
 % figure; image(MM); axis image
+
+
