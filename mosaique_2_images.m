@@ -48,10 +48,12 @@ Htest_fixe = [ 0.175197452221173 -0.220574752903233 315.735732267322 ; 0.0136147
 
 %% On leur applique l'homographie à la mib
 
-[ mib1_homo ] = mib_apply_homo( mib2 , Htest_fixe);
+[ mib2_homo ] = mib_apply_homo( mib2 , Htest_fixe);
 
-
-
+% image2_homo = mib2_homo.img;
+% figure, imshow(uint8(image2_homo));
+% title('mib.img recorded');
+% drawnow;
 
 %% On les fusionne
 
