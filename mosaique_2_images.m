@@ -38,14 +38,17 @@ img2=f_extraction2(I3,img1);
 [ mib2 ] = mib_create( img2 );
 
 %% On sélectionne les points que les images ont en communs pour connaitre l'homographie qui les relie
-[ pts_img1 , pts_img2 ] = get_similar_points( img1,img2 );
 
-[HOMOG]=homographie(pts_img2(1,:),pts_img2(2,:),pts_img2(3,:),pts_img2(4,:),pts_img1(1,:),pts_img1(2,:),pts_img1(3,:),pts_img1(4,:));
-H=[HOMOG(1,1) HOMOG(2,1) HOMOG(3,1);HOMOG(4,1) HOMOG(5,1) HOMOG(6,1); HOMOG(7,1) HOMOG(8,1) 1];
+% [ pts_img1 , pts_img2 ] = get_similar_points( img1,img2 );
+
+% [HOMOG]=homographie(pts_img2(1,:),pts_img2(2,:),pts_img2(3,:),pts_img2(4,:),pts_img1(1,:),pts_img1(2,:),pts_img1(3,:),pts_img1(4,:));
+% H=[HOMOG(1,1) HOMOG(2,1) HOMOG(3,1);HOMOG(4,1) HOMOG(5,1) HOMOG(6,1); HOMOG(7,1) HOMOG(8,1) 1];
+
+Htest_fixe = [ 0.175197452221173 -0.220574752903233 315.735732267322 ; 0.0136147637091835 0.216174576108749 250.335977405573; 0.000109942879684181 -0.000506109592751219 1 ];
 
 %% On leur applique l'homographie à la mib
 
-[ mib1_homo ] = mib_apply_homo( mib2 , H);
+[ mib1_homo ] = mib_apply_homo( mib2 , Htest_fixe);
 
 
 
