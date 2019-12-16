@@ -8,7 +8,7 @@ close all;
 % [h2 ,l2] = size(I2);
 
 %f_projection(I1,I2);
-%f_extraction(I2,I1);
+%f_extraction(I2,I1)²²²²²²²²²²²²²²²²²²²²²²;
 
 %% Images de départ
 %Image de départ à partir de laquel on fabrique 2 image possédant
@@ -27,9 +27,9 @@ img1 = I3(1:362,1:400,:);
 
 img2=f_extraction2(I3,img1);
 
-figure, imshow(uint8(img2));
-title('img2 mosaique');
-drawnow;
+% figure, imshow(uint8(img2));
+% title('img2 mosaique');
+% drawnow;
 
 %% Création des MIB
 % MIB = image + image en mask + boite en globante (2 coins extrem)

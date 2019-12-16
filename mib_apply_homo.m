@@ -42,12 +42,35 @@ a(1,1)=a(1,1)/a(3,1);
 a(2,1)=a(2,1)/a(3,1);
 coin4(1,:) = [  round(a(1,1)) round(a(2,1)) ];
 
+%% Pour obtenir la boite englobante homo
+Xmin = min(coin1(1,1),coin4(1,1));
+Xmax = max(coin2(1,1),coin3(1,1));
+Ymin = min(coin1(1,2),coin2(1,2));
+Ymax = max(coin3(1,2),coin4(1,2));
+
+largeur_box_homo = Xmax-Xmin;
+hauteur_box_homo = Ymax-Ymin;
+
+
+coin1_box(1, :) = [ Xmin Ymin ];   %4 points de la nouvelle boite
+coin2_box(1, :) = [ Xmax Ymin ];
+coin3_box(1, :) = [ Xmax Ymax ];
+coin4_box(1, :) = [ Xmin Ymax ];
+
+boitehomo(:,:) = zeros(hauteur_box_homo, largeur_box_homo);
+
+figure, imshow(uint8(boitehomo));
+title('boite nouvelle homo');
+drawnow;
+
+
+
 %% On applique l'homo à l'image
 
-img_homo(:,:,:)=zeros(h,l,c);
+img_homo(:,:,:)=zeros(h+hauteur_box_homo,l+largeur_box_homo,c);
 
-for i=1:h
-    for j=1:l
+for i=1:h+50
+    for j=1:l+50
         a=inv(H)*[j;i;1];   
         a(1,1)=a(1,1)/a(3,1); 
         a(2,1)=a(2,1)/a(3,1);
@@ -115,12 +138,7 @@ title('mib.img après homo');
 drawnow;
 
 %EXTREMUMS BOITE ENGLOBANTE
-hold on;
-plot(extrem1X,extrem1Y,'r*','MarkerSize', 10, 'LineWidth', 1);
-% hold on;
-% plot(coin1(1,1),coin1(2,1),'rx','MarkerSize', 10, 'LineWidth', 1);
-hold on;
-plot(extrem2X,extrem2Y,'b*','MarkerSize', 10, 'LineWidth', 1);
+
 
 %4 COINS BOITE ENGLOBANTE
 % hold on;
@@ -133,18 +151,29 @@ plot(extrem2X,extrem2Y,'b*','MarkerSize', 10, 'LineWidth', 1);
 % plot(extrem1X,extrem2Y,'yX','MarkerSize', 15, 'LineWidth', 1);
 
 
+%POINTS HOMO
+hold on;
+plot(coin1(1,1),coin1(1,2),'co','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(coin2(1,1),coin2(1,2),'ro','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(coin3(1,1),coin3(1,2),'go','MarkerSize', 10, 'LineWidth', 1);
+hold on;
+plot(coin4(1,1),coin4(1,2),'yo','MarkerSize', 10, 'LineWidth', 1);
 
+%POINTS BOITE de LHOMO
 hold on;
-plot(coin1(1,1),coin1(1,2),'co','MarkerSize', 15, 'LineWidth', 1);
+plot(coin1_box(1,1),coin1_box(1,2),'rX','MarkerSize', 10, 'LineWidth', 1);
 hold on;
-plot(coin2(1,1),coin2(1,2),'ro','MarkerSize', 15, 'LineWidth', 1);
+plot(coin2_box(1,1),coin2_box(1,2),'bX','MarkerSize', 10, 'LineWidth', 1);
 hold on;
-plot(coin3(1,1),coin3(1,2),'go','MarkerSize', 15, 'LineWidth', 1);
+plot(coin3_box(1,1),coin3_box(1,2),'gX','MarkerSize', 10, 'LineWidth', 1);
 hold on;
-plot(coin4(1,1),coin4(1,2),'yo','MarkerSize', 15, 'LineWidth', 1);
+plot(coin4_box(1,1),coin4_box(1,2),'yX','MarkerSize', 10, 'LineWidth', 1);
 
-legend('extrem1','extrem2', 'boite1','boite2','boite3','boite4');
+legend('homo1','homo2','homo3','homo4', 'boite1','boite2','boite3','boite4');
 
+%MASK
 figure, imshow(uint8(mask_homo));
 title('mask.img après homo');
 drawnow;
