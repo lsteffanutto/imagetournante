@@ -27,9 +27,9 @@ img1 = I3(1:362,1:400,:);
 
 img2=f_extraction2(I3,img1);
 
-% figure, imshow(uint8(img2));
-% title('img2 mosaique');
-% drawnow;
+figure, imshow(uint8(img2));
+title('img2 mosaique');
+drawnow;
 
 %% Création des MIB
 % MIB = image + image en mask + boite en globante (2 coins extrem)
@@ -49,6 +49,8 @@ Htest_fixe = [ 0.175197452221173 -0.220574752903233 315.735732267322 ; 0.0136147
 %% On leur applique l'homographie à la mib
 
 [ mib2_homo ] = mib_apply_homo( mib2 , Htest_fixe);
+%[ mib2_homo ] = mib_apply_homo( mib1 , Htest_fixe);
+
 
 % image2_homo = mib2_homo.img;
 % figure, imshow(uint8(image2_homo));
