@@ -68,6 +68,7 @@ drawnow;
 %% On applique l'homo à l'image
 
 img_homo(:,:,:)=zeros(h+hauteur_box_homo,l+largeur_box_homo,c);
+img_homo_bis(:,:,:)= zeros(hauteur_box_homo,largeur_box_homo,c);
 
 for i=1:h+50
     for j=1:l+50
@@ -87,6 +88,26 @@ for i=1:h+50
     end
 end
 mib.img = img_homo;
+
+% img_homo_bis(:,:,:)= zeros(hauteur_box_homo,largeur_box_homo,c);
+
+% for i= Ymin:Ymax
+%     for j= Xmin:Xmax
+%         a=inv(H)*[j;i;1];   
+%         a(1,1)=a(1,1)/a(3,1); 
+%         a(2,1)=a(2,1)/a(3,1);
+%         
+%         if round(a(1,1))>Xmin && round(a(1,1))<Xmax && round(a(2,1))>Ymin && round(a(2,1))<Ymax
+%             
+%             img_homo_bis(i,j,:)=img(round(a(2,1)),round(a(1,1)),:); % les points était les mêmes points mais de l'autre image falait leur appliquer l'homo
+% %             img_homo(i,j,:);
+%         else
+%             %img_homo(i,j,:)=img(i,j,:);
+%         end
+%         
+%     %a=zeros(3,1);
+%     end
+% end
 
 %% On applique l'homo au mask
 mask_homo(:,:)=zeros(h,l);
@@ -109,6 +130,9 @@ for i=1:h
     end
 end
 
+figure, imshow(uint8(img_homo));
+title('mib.img après homo propre');
+drawnow;
 
 mib.mask = mask_homo;
 

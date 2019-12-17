@@ -8,7 +8,7 @@ close all;
 % [h2 ,l2] = size(I2);
 
 %f_projection(I1,I2);
-%f_extraction(I2,I1)²²²²²²²²²²²²²²²²²²²²²²;
+%f_extraction(I2,I1);
 
 %% Images de départ
 %Image de départ à partir de laquel on fabrique 2 image possédant
@@ -19,17 +19,17 @@ I3=double(imread('bdx.jpg'));
 %image mosaique 1 = image 3 tronque
 img1 = I3(1:362,1:400,:);
 
-% figure, imshow(uint8(img1));
-% title('img1 mosaique');
-% drawnow;
+figure, imshow(uint8(img1));
+title('img1 mosaique');
+drawnow;
 
 %image mosaique 2 = extraction d'une partie de image 3
 
 img2=f_extraction2(I3,img1);
 
-% figure, imshow(uint8(img2));
-% title('img2 mosaique');
-% drawnow;
+figure, imshow(uint8(img2));
+title('img2 mosaique');
+drawnow;
 
 %% Création des MIB
 % MIB = image + image en mask + boite en globante (2 coins extrem)
