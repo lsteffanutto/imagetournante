@@ -7,13 +7,13 @@ function [ extraction_finale ] = f_extraction2(I1,I2)
 % title('I1 DP');
 [depart] = [ 317   250; 466   236; 462   365; 300   395];
 
-DP1 = [depart(1,1) depart(1,2)] %(x,y)
-DP2 = [depart(2,1) depart(2,2)]
-DP3 = [depart(3,1) depart(3,2)]
-DP4 = [depart(4,1) depart(4,2)]
+DP1 = [depart(1,1) depart(1,2)]; %(x,y)
+DP2 = [depart(2,1) depart(2,2)];
+DP3 = [depart(3,1) depart(3,2)];
+DP4 = [depart(4,1) depart(4,2)];
 
-DPX_min_max = [ min([DP1(1,1) DP2(1,1) DP3(1,1) DP4(1,1)]) , max([DP1(1,1) DP2(1,1) DP3(1,1) DP4(1,1)]) ]
-DPY_min_max = [ min([DP1(1,2) DP2(1,2) DP3(1,2) DP4(1,2)]) , max([DP1(1,2) DP2(1,2) DP3(1,2) DP4(1,2)]) ]
+DPX_min_max = [ min([DP1(1,1) DP2(1,1) DP3(1,1) DP4(1,1)]) , max([DP1(1,1) DP2(1,1) DP3(1,1) DP4(1,1)]) ];
+DPY_min_max = [ min([DP1(1,2) DP2(1,2) DP3(1,2) DP4(1,2)]) , max([DP1(1,2) DP2(1,2) DP3(1,2) DP4(1,2)]) ];
 
 % hold on;
 % plot(DP1(1,1),DP1(1,2),'r+','MarkerSize', 10, 'LineWidth', 1);

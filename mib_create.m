@@ -13,8 +13,8 @@ I_mask(:,:,1) = 1;
 
 MIB.mask = I_mask;
 %On crée la boite englobante qu'on stock
-extrem1 = [ 1 1 ]
-extrem2 = [h_box l_box]
+extrem1 = [ 1 1 ];
+extrem2 = [h_box l_box];
 MIB.boite = [ extrem1 ; extrem2 ]
 
 
