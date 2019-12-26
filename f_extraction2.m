@@ -5,7 +5,8 @@ function [ extraction_finale ] = f_extraction2(I1,I2)
 
 % figure, imshow(uint8(I1));
 % title('I1 DP');
-[depart] = [ 317   250; 466   236; 462   365; 300   395];
+[depart] = [ 317   250; 540   236; 560   467; 300   500];
+% [depart] = [ 317   250; 466   236; 462   365; 300   395];
 
 DP1 = [depart(1,1) depart(1,2)]; %(x,y)
 DP2 = [depart(2,1) depart(2,2)];

@@ -66,9 +66,9 @@ for i=1:h1
     end
 end
 
-% figure, imshow(uint8(projection_finale));
-% title('Fonction Projection finale');
-% drawnow;
+figure, imshow(uint8(projection_finale));
+title('Fonction Projection finale');
+drawnow;
 
 end
 
